@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banda Os Recicláveis</title>
+    <style>
+        :root {
+            --primary-color: #1a936f;
+            --secondary-color: #114b5f;
+            --accent-color: #f3e9d2;
+            --dark-color: #172a3a;
+            --light-color: #f2f2f2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Main content */
+        main {
+            min-height: 80vh;
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        /* Login form */
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-block {
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu li a {
+            display: block;
+            padding: 12px 15px;
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .main-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Profile */
+        .profile-section,
+        .members-section,
+        .announcements-section {
+            display: none;
+        }
+        
+        .welcome-section {
+            display: block;
+        }
+        
+        .profile-info {
+            background-color: var(--accent-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-info h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .profile-details p {
+            margin-bottom: 10px;
+        }
+        
+        .profile-details strong {
+            color: var(--secondary-color);
+        }
+        
+        /* Members */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .member-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .member-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .member-card p {
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        /* Announcements */
+        .announcement {
+            background-color: white;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .announcement h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .announcement-meta {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-20 {
+            margin-top: 20px;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+            }
+            
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Banda <span>Os Recicláveis</span></div>
+            <nav id="nav-public" class="nav-public">
+                <ul>
+                    <li><a href="#" class="active">Início</a></li>
+                    <li><a href="#" id="login-nav">Login</a></li>
+                </ul>
+            </nav>
+            <nav id="nav-dashboard" class="nav-dashboard" style="display: none;">
+                <ul>
+                    <li><a href="#" id="logout-btn">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Login Form -->
+            <div class="login-container" id="login-section">
+                <h2>Login de Membro</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login">Login</label>
+                        <input type="text" id="login" name="login" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-block">Entrar</button>
+                </form>
+                <p id="login-error" class="text-center mt-20" style="color: red; display: none;">Login ou senha incorretos!</p>
+            </div>
+
+            <!-- Dashboard -->
+            <div class="dashboard" id="dashboard-section">
+                <div class="dashboard-content">
+                    <div class="sidebar">
+                        <ul class="sidebar-menu">
+                            <li><a href="#" class="active" data-section="welcome">Bem-vindo</a></li>
+                            <li><a href="#" data-section="profile">Meu Perfil</a></li>
+                            <li><a href="#" data-section="members">Membros da Banda</a></li>
+                            <li><a href="#" data-section="announcements">Avisos</a></li>
+                            <li><a href="https://www.instagram.com/banda.os.reciclaveis/" target="_blank">Instagram da Banda</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="main-content">
+                        <!-- Welcome Section -->
+                        <div class="welcome-section" id="welcome-section">
+                            <h2 class="section-title">Bem-vindo à Banda Os Recicláveis!</h2>
+                            <div class="profile-info">
+                                <h3>Olá, <span id="welcome-name">Membro</span>!</h3>
+                                <p>É um prazer ter você como parte da nossa banda. Use o menu lateral para navegar pelo sistema.</p>
+                            </div>
+                            <div class="band-info mb-20">
+                                <h3 class="mb-20">Sobre a Banda</h3>
+                                <p>A Banda Os Recicláveis é um grupo musical que utiliza instrumentos feitos de materiais reciclados para criar música única e conscientizar sobre a importância da sustentabilidade.</p>
+                                <p class="mt-20">Maestro: <strong>Emanoel Alencar Santos</strong> (2022-2023-2024)</p>
+                            </div>
+                            <div class="text-center mt-20">
+                                <a href="https://www.instagram.com/banda.os.reciclaveis/" target="_blank" class="btn">Siga-nos no Instagram</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Section -->
+                        <div class="profile-section" id="profile-section">
+                            <h2 class="section-title">Meu Perfil</h2>
+                            <div class="profile-info">
+                                <div class="profile-details">
+                                    <p><strong>Nome:</strong> <span id="profile-name"></span></p>
+                                    <p><strong>Turma:</strong> <span id="profile-class"></span></p>
+                                    <p><strong>Instrumento:</strong> <span id="profile-instrument"></span></p>
+                                    <p><strong>Login:</strong> <span id="profile-login"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Members Section -->
+                        <div class="members-section" id="members-section">
+                            <h2 class="section-title">Membros da Banda</h2>
+                            <div class="members-grid" id="members-grid">
+                                <!-- Members will be loaded dynamically -->
+                            </div>
+                        </div>
+                        
+                        <!-- Announcements Section -->
+                        <div class="announcements-section" id="announcements-section">
+                            <h2 class="section-title">Avisos</h2>
+                            <div class="announcements-list">
+                                <div class="announcement">
+                                    <h3>Ensaio Geral - Apresentação de Fim de Ano</h3>
+                                    <div class="announcement-meta">15/04/2025</div>
+                                    <p>Prezados membros, teremos um ensaio geral na próxima sexta-feira às 14h. Todos devem estar presentes com seus instrumentos para a preparação da apresentação de fim de ano.</p>
+                                </div>
+                                <div class="announcement">
+                                    <h3>Manutenção de Instrumentos</h3>
+                                    <div class="announcement-meta">10/04/2025</div>
+                                    <p>Lembramos a todos que a manutenção adequada dos instrumentos é fundamental. No próximo sábado teremos uma oficina de reparo e ajustes em todos os instrumentos.</p>
+                                </div>
+                                <div class="announcement">
+                                    <h3>Nova Composição</h3>
+                                    <div class="announcement-meta">05/04/2025</div>
+                                    <p>O Maestro Emanoel Alencar Santos compartilhou uma nova composição que será adicionada ao nosso repertório. As partituras serão distribuídas no próximo ensaio.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Banda Os Recicláveis. Todos os direitos reservados.</p>
+            <p>Maestro: Emanoel Alencar Santos (2022-2023-2024)</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/banda.os.reciclaveis/" target="_blank">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Database of users
+        const users = [
+            { name: "José Ibiapino Alencar", class: "2Tc", instrument: "Bumbo", login: "103284", password: "847302" },
+            { name: "Geovani Alves Feitosa", class: "1TcM", instrument: "Bumbo", login: "495201", password: "324187" },
+            { name: "José Vitor da Silva", class: "2TC", instrument: "Bumbo", login: "983102", password: "732890" },
+            { name: "João Victo Silva vanderley", class: "2TCA", instrument: "Bumbo", login: "285716", password: "183049" },
+            { name: "Mateus França Silva", class: "1AD", instrument: "Bumbo", login: "493820", password: "209384" },
+            { name: "Fernando Nunes Tavares", class: "1B", instrument: "Lata", login: "209483", password: "583920" },
+            { name: "Felipe Pereira Silva", class: "1B", instrument: "Lata", login: "384729", password: "917203" },
+            { name: "João Pedro lima farias", class: "1A", instrument: "Lata", login: "103948", password: "209473" },
+            { name: "Ruan Rodrigues Silva", class: "2Tc", instrument: "Balde", login: "938472", password: "128374" },
+            { name: "Marquinho Paulo Clarindo Silva", class: "2TCA", instrument: "Balde", login: "203948", password: "483920" },
+            { name: "José Alan Silva Tavares", class: "3C", instrument: "Balde", login: "918273", password: "103948" },
+            { name: "Adrian Silva Santos", class: "1AD", instrument: "Balde", login: "274839", password: "293847" },
+            { name: "João Pedro Matos Silva", class: "1DA", instrument: "Balde", login: "294837", password: "384726" },
+            { name: "Paulo Roberto Santos Ferreira", class: "1B", instrument: "Balde", login: "918374", password: "203948" },
+            { name: "Everton kaique Alencar da Silva", class: "1B", instrument: "Balde", login: "382910", password: "582930" }
+        ];
+
+        // DOM Elements
+        const loginSection = document.getElementById('login-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const welcomeSection = document.getElementById('welcome-section');
+        const profileSection = document.getElementById('profile-section');
+        const membersSection = document.getElementById('members-section');
+        const announcementsSection = document.getElementById('announcements-section');
+        const navPublic = document.getElementById('nav-public');
+        const navDashboard = document.getElementById('nav-dashboard');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginNav = document.getElementById('login-nav');
+        
+        // Current user
+        let currentUser = null;
+
+        // Event Listeners
+        loginForm.addEventListener('submit', handleLogin);
+        logoutBtn.addEventListener('click', handleLogout);
+        loginNav.addEventListener('click', showLoginSection);
+
+        // Dashboard navigation
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('target') !== '_blank') {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    if (section) {
+                        showSection(section);
+                        
+                        // Update active link
+                        sidebarLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Load members grid
+        function loadMembersGrid() {
+            const membersGrid = document.getElementById('members-grid');
+            membersGrid.innerHTML = '';
+            
+            users.forEach(user => {
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card';
+                memberCard.innerHTML = `
+                    <h3>${user.name}</h3>
+                    <p><strong>Turma:</strong> ${user.class}</p>
+                    <p><strong>Instrumento:</strong> ${user.instrument}</p>
+                `;
+                membersGrid.appendChild(memberCard);
+            });
+        }
+
+        // Handle login
+        function handleLogin(e) {
+            e.preventDefault();
+            const login = document.getElementById('login').value;
+            const password = document.getElementById('password').value;
+            
+            const user = users.find(u => u.login === login && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                loginError.style.display = 'none';
+                loginSection.style.display = 'none';
+                dashboardSection.style.display = 'block';
+                navPublic.style.display = 'none';
+                navDashboard.style.display = 'block';
+                
+                // Update welcome message
+                document.getElementById('welcome-name').textContent = user.name;
+                
+                // Update profile info
+                document.getElementById('profile-name').textContent = user.name;
+                document.getElementById('profile-class').textContent = user.class;
+                document.getElementById('profile-instrument').textContent = user.instrument;
+                document.getElementById('profile-login').textContent = user.login;
+                
+                // Load members grid
+                loadMembersGrid();
+                
+                // Show welcome section by default
+                showSection('welcome');
+            } else {
+                loginError.style.display = 'block';
+            }
+        }
+
+        // Handle logout
+        function handleLogout(e) {
+            e.preventDefault();
+            currentUser = null;
+            loginSection.style.display = 'block';
+            dashboardSection.style.display = 'none';
+            navPublic.style.display = 'block';
+            navDashboard.style.display = 'none';
+            
+            // Clear form
+            document.getElementById('login').value = '';
+            document.getElementById('password').value = '';
+            loginError.style.display = 'none';
+        }
+
+        // Show login section
+        function showLoginSection(e) {
+            e.preventDefault();
+            loginSection.style.display = 'block';
+            dashboardSection.style.display = 'none';
+        }
+
+        // Show section
+        function showSection(section) {
+            // Hide all sections
+            welcomeSection.style.display = 'none';
+            profileSection.style.display = 'none';
+            membersSection.style.display = 'none';
+            announcementsSection.style.display = 'none';
+            
+            // Show requested section
+            document.getElementById(`${section}-section`).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
